@@ -51,3 +51,44 @@ db.users.updateMany({name : "Rahul1"},{$set : { name : "Rahul2"}}) // Replaces R
 db.users.updateMany({age : 35}, {$inc : {age : 5}}) // increments all age 35 values to 40 by adding 5
 {}
 db.users.replpaceOne({name : "Rahul2"},{name : "RAhul3"}); //Replaces the first match ,replaces the complete document instead of replacing the field
+
+
+//Delete
+db.users.updateOne({name : "Rahul"}) //Delete first document that matches the filter object 
+db.users.updateMany({age : 75})  //Delete all documents matching the filter object 
+
+
+//Additional filter objects
+db.users.find({name : {$eq : "john"}}) //Get all the users with the name john
+db.users.find({name : {$ne : "john"}}) //Get all the users whose name not equal to john
+db.users.find({age : {$gt : 12}}) //Get all the users whose age greater than 12
+db.users.find({age : {$gte : 10}}) //Get all the users whose are greater than 10
+db.users.find({age : {$lt : 10}})  //Gets all the users whose age less than 10
+db.users.find({age : {$lte : 10}})  //Gets all the users whose age less than or equal to 10
+db.users.find({name : {$in : ["Riya","John"]}})  //Get all the users with the name of "Riya" and "John"
+db.users.find({name : {$nin : ["Riya","John"]}})  //Get all the users that does not have the name of "Riya" and "John"
+db.users.find({$and : [{name : "Riya"},{age : 10}]}) //Get all the users with name "Riya" and age 10
+db.users.find({$or : [{name : "Riya"},{age : 15}]})  //Get all the users with name "Riya" or age 15
+db.users.find({name : {$not : {$eq : "Riya"}}})  //Get all the users with name other than "Riya"
+db.users.find({age : {$exists : true}})  //Get all the users having an age field 
+db.users.find({$expr : {$gt :["$age","$min_age"]}})  //Gets all the users having their age greater than min_age
+
+
+
+
+
+
+//Additional update objects
+db.users.updateOne({age : 15},{$set : {name:"hi"}})  //Updates the name of the first user user with age of 15 ot the value "hi"
+db.users.updateOne({age : 10},{$inc : {age : 5}})    //Add 5 to the age of the first user with the age of 10
+db.user.updateMany({}, {$rename : {age : "years"}})  //Renames the field age to years of all the users
+db.user.updateOne({age : 15},{$unset : {age : ""}})  //Remove the age field from the first user with age of 15
+db.users.updateMany({},{$push : {social_medias : "Instagram"}})  //Add "Instagram" to the "social_medias" array for all users
+db.users.updateMany({},{$pull : {social_medias : "Instagram"}})   //Removes "Instagram" from the "social_medias" array for all users
+
+
+
+//Read modifiers
+db.users.find().sort({name : 1, age : -1})   //Get all users sorted by name in alphabetical order and if any names are the same sort by age in reverse order 
+db.users.find().limit(2)  //only returns the first 2 users
+db.users.find().skip(4)   //skip the first 4 users when returning the result. skip and limit are combined for applying pagination 
