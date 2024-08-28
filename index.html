@@ -1,0 +1,53 @@
+mongo | mongosh - open a connection to the local mongodb instance 
+show dbs - show all databases
+use db_name - Create and switch to the database
+db - prints current database
+db.dropDatabase() - Delete the current database
+
+show collections - show all collections in database
+db.createCollections("users") - create a collection with name users
+
+CRUD - Create Delete Update Delete
+
+//Create
+db.users.insertOne({name : "rahul"}) //CReates a new documentn inside the users collection
+
+db.users.insertMany([{name : "rahul"} , {name : "kyle"}]) // Createsmultiple new documents inside the 'users' collection
+
+{
+    name : "abc",
+    age : "18",
+}
+
+db.user.insertOne({firstname : "john",
+            lastname : "king",
+            email : "john@gmai.com",
+            salary : "30000",
+            DOB : new DTae('Mar 24,2011'),
+            skills : ["Angular","React","mongodb"],
+            address : {
+                street : "Upper street",
+                house: "No 1",
+                city : "New york",
+                country : "USA"
+            }});
+
+//Read
+db.users.find() // Get all documents from user's collection 
+db.users.find(<filter object>) // finds all documents that matches the filter object 
+db.users.find({age : 35})
+
+db.users.find(<filtefr object><select object>) //finds all the documents that matches the filter object but returns only the files specified in the select object 
+db.users.find({age : 35}, {name : 1,_id : 0})
+
+db.users.findOne({name : "Rahul"}) // only returns the first document that matches the filter object 
+
+db.users.countDocuments(<filter object>) //Returs documents matching the filter object , if filter object empty returns all documents countDocuments
+
+
+//Update
+db.users.updateOne({name : "Rahul"},{$set : { name : "Rahul1"}}) // Replaces Rahul with Rahul1, considers only the first match
+db.users.updateMany({name : "Rahul1"},{$set : { name : "Rahul2"}}) // Replaces Rahul1 with Rahul2, considers all the matches 
+db.users.updateMany({age : 35}, {$inc : {age : 5}}) // increments all age 35 values to 40 by adding 5
+{}
+db.users.replpaceOne({name : "Rahul2"},{name : "RAhul3"}); //Replaces the first match ,replaces the complete document instead of replacing the field
